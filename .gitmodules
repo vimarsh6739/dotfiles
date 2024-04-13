@@ -1,0 +1,4 @@
+[submodule "kickstart.nvim"]
+	path = kickstart.nvim
+	url = git@github.com:vimarsh6739/kickstart.nvim.git
+	branch = master
