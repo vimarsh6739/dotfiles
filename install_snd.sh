@@ -31,7 +31,7 @@ mv kickstart.nvim "$HOME/.config/nvim/"
 # Download and install anaconda
 curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 mv "Miniconda3-latest-Linux-x86_64.sh" "$HOME" 
-. "$HOME/Miniconda3-latest-Linux-x86_64.sh"
+sh "$HOME/Miniconda3-latest-Linux-x86_64.sh"
 
 # CHANGE THE CONDA SOLVER TO LIBMAMBA once it's installed. 
 # Instructions are here: https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community
