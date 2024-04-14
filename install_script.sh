@@ -1,7 +1,7 @@
 # Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 mv install.sh "$HOME"
-sh "$HOME/install.sh"
+bash "$HOME/install.sh"
 
 # Configure extensions for oh-my-zsh
 # autosuggestions
