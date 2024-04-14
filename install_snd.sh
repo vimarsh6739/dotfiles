@@ -1,11 +1,5 @@
 #!/usr/bin/bash
 
-# Install oh-my-zsh
-curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-chmod +x install.sh
-mv install.sh "$HOME"
-. "$HOME/install.sh"
-
 # Configure extensions for oh-my-zsh
 # autosuggestions
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
