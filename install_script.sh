@@ -1,7 +1,10 @@
+#!/usr/bin/bash
+
 # Install oh-my-zsh
 curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+chmod +x install.sh
 mv install.sh "$HOME"
-bash "$HOME/install.sh"
+. "$HOME/install.sh"
 
 # Configure extensions for oh-my-zsh
 # autosuggestions
@@ -32,8 +35,9 @@ mkdir -p "$HOME/.config"
 mv kickstart.nvim "$HOME/.config/nvim/"
 
 # Download and install anaconda
-cd "$HOME" && {curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh; cd -; }
-bash "$HOME/Miniconda3-latest-Linux-x86_64.sh"
+curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+mv "Miniconda3-latest-Linux-x86_64.sh" "$HOME" 
+. "$HOME/Miniconda3-latest-Linux-x86_64.sh"
 
 # CHANGE THE CONDA SOLVER TO LIBMAMBA once it's installed. 
 # Instructions are here: https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community
