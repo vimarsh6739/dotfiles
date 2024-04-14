@@ -1,9 +1,8 @@
 #!/usr/bin/bash
 
 # Install oh-my-zsh
-curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-chmod +x install.sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 mv install.sh "$HOME"
-source "$HOME/install.sh"
+sh "$HOME/install.sh"
 
 
