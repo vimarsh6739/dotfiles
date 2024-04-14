@@ -31,5 +31,12 @@ rm nvim-linux64.tar.gz
 mkdir -p "$HOME/.config"
 mv kickstart.nvim "$HOME/.config/nvim/"
 
+# Download and install anaconda
+cd "$HOME" && {curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh; cd -; }
+bash "$HOME/Miniconda3-latest-Linux-x86_64.sh"
+
+# CHANGE THE CONDA SOLVER TO LIBMAMBA once it's installed. 
+# Instructions are here: https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community
+# Note to self: Not automating this process now
 # Assume CUDA and CUDNN is already installed in $HOME/local
 # Add aliases to local path for the nvcc compiler
