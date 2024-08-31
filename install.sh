@@ -19,14 +19,25 @@ install_nodejs(){
 	make 
 	make install
 
-	# ensure that PATH is updated
+	# add to PATH
 	echo 'export PATH=${HOME}/.local/bin:${PATH}' >> "$HOME/.zshrc" 
 
 	# optional: update npm to latest version
 	wget -c https://www.npmjs.org/install.sh | sh
 }
 
-# Fetch and install conda
+# Install nvim
+install_nvim(){
+	# Fetch and extract binaries
+	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+	tar -zxvf nvim-linux64.tar.gz
+	mv nvim-linux64 "$HOME/nvim-local"
+	
+	# Add to PATH
+	echo 'export PATH=${HOME}/nvim-local/bin:${PATH}' >> "$HOME/.zshrc"
+}
+
+# Install conda
 install_conda() {
 	curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 	mv "Miniconda3-latest-Linux-x86_64.sh" "$HOME" 
@@ -43,14 +54,11 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 # update the plugins line in zshrc
 sed -i "s/plugins=.*/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/" "$HOME/.zshrc"
 
-# Install nvim locally and add it to PATH
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-tar -zxvf nvim-linux64.tar.gz
-mv nvim-linux64 "$HOME/nvim-local" 
-echo 'export PATH=${HOME}/nvim-local/bin:${PATH}' >> "$HOME/.zshrc"
-# Alias vim to nvim
+# Configure nvim
+install_nvim
+# alias vim to nvim
 echo "alias vim='nvim'" >> "$HOME/.zshrc"
-# Set neovim config
+# set neovim config
 mkdir -p "${HOME}/.config"
 ln -s "${REPO_ROOT}/nvim.conf" "${HOME}/.config/nvim"
 
