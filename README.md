@@ -1,14 +1,7 @@
-Staging area for my remote and local config
+Staging area for my terminal configs
 
-Since there are submodule(s), clone as 
-
-```bash
-git clone --recursive git@github.com:vimarsh6739/dotfiles.git
-```
-
-or 
+First, do a vanilla install of `zsh` with `oh-my-zsh`. Then simply run
 
 ```bash
-git clone git@github.com:vimarsh6739/dotfiles.git
-git submodule update --init --recursive
+./install.sh
 ```
