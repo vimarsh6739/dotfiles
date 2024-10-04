@@ -16,7 +16,7 @@ install_nodejs(){
 	wget -c http://nodejs.org/dist/node-latest.tar.gz
 	tar --strip-components=1 -zxvf node-latest.tar.gz
 	./configure --prefix=${INSTALL_DIR}
-	make 
+	make -j $(nproc) 
 	make install
 
 	# add to PATH
@@ -61,7 +61,8 @@ echo "alias vim='nvim'" >> "$HOME/.zshrc"
 # set neovim config
 mkdir -p "${HOME}/.config"
 ln -s "${REPO_ROOT}/nvim.conf" "${HOME}/.config/nvim"
-
+# set the git editor to nvim
+git config --global core.editor "nvim"
 # # Install miniconda
 # install_conda 
 # CHANGE THE CONDA SOLVER TO LIBMAMBA once it's installed. 
