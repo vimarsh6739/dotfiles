@@ -441,7 +441,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'llvm' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
@@ -615,6 +615,16 @@ local servers = {
   },
 }
 
+local manual_servers = {
+  mlir_lsp_server = {
+    filetypes = { "mlir" },
+    cmd = { "/home/vimarsh6739/tools/bin/mlir-lsp-server" },
+    root_dir = require("lspconfig.util").find_git_ancestor,
+    single_file_support = true,
+  },
+}
+
+
 -- Setup neovim lua configuration
 require('neodev').setup()
 
@@ -639,6 +649,41 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
+
+-- Setup the manual servers
+for server_name, server_settings in pairs(manual_servers) do
+  require('lspconfig')[server_name].setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    filetypes = server_settings.filetypes,
+    cmd = server_settings.cmd,
+    root_dir = server_settings.root_dir,
+    single_file_support = server_settings.single_file_support,
+  }
+end
+
+-- add mlir filetype
+vim.filetype.add({
+  extension = {
+    mlir = "mlir",
+    td = "tablegen"
+  },
+  pattern = {
+    [".*%.ll"] = "llvm"
+  }
+})
+
+-- enable mlir highlighting
+vim.g.markdown_fenced_languages = {'mlir', 'tablegen'}
+
+-- source MLIR vim files
+vim.cmd.runtime("syntax/mlir.vim")
+vim.cmd.runtime("ftplugin/mlir.vim")
+vim.cmd.runtime("indent/mlir.vim")
+
+-- source tablegen vim files
+vim.cmd.runtime("syntax/tablegen.vim")
+vim.cmd.runtime("ftplugin/tablegen.vim")
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
