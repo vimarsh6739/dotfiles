@@ -277,7 +277,18 @@ require('lazy').setup({
   --       Uncomment any of the lines below to enable them.
   -- require 'kickstart.plugins.autoformat',
   -- require 'kickstart.plugins.debug',
-
+  {
+    'rmagatti/auto-session',
+    lazy = false,
+    --enables autocomplete for opts
+    ---@module "auto-session"
+    --- @type AutoSession.config
+    opts = {
+      auto_save = false,
+      auto_restore = false,
+      suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+    }
+  }
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
   --    up-to-date with whatever is in the kickstart repo.
@@ -386,7 +397,7 @@ local function find_git_root()
     current_dir = vim.fn.fnamemodify(current_file, ':h')
   end
 
-  -- Find the Git root directory from the current file's path
+  -- Find the Gi root directory from the current file's path
   local git_root = vim.fn.systemlist('git -C ' .. vim.fn.escape(current_dir, ' ') .. ' rev-parse --show-toplevel')[1]
   if vim.v.shell_error ~= 0 then
     print 'Not a git repository. Searching on current working directory'
@@ -674,7 +685,7 @@ vim.filetype.add({
 })
 
 -- enable mlir highlighting
-vim.g.markdown_fenced_languages = {'mlir', 'tablegen'}
+vim.g.markdown_fenced_languages = { 'mlir', 'tablegen' }
 
 -- source MLIR vim files
 vim.cmd.runtime("syntax/mlir.vim")
@@ -739,8 +750,10 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
--- Set tab width to 2 spaces
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
+
+--recommended session options 
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
