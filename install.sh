@@ -29,7 +29,8 @@ install_nodejs(){
 # Install nvim
 install_nvim(){
 	# Fetch and extract binaries
-	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+	curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz
+	
 	tar -zxvf nvim-linux64.tar.gz
 	mv nvim-linux64 "$HOME/nvim-local"
 	
@@ -63,6 +64,7 @@ mkdir -p "${HOME}/.config"
 ln -s "${REPO_ROOT}/nvim.conf" "${HOME}/.config/nvim"
 # set the git editor to nvim
 git config --global core.editor "nvim"
+
 # # Install miniconda
 # install_conda 
 # CHANGE THE CONDA SOLVER TO LIBMAMBA once it's installed. 
