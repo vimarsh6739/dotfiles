@@ -31,8 +31,8 @@ install_nvim(){
 	# Fetch and extract binaries
 	curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz
 	
-	tar -zxvf nvim-linux64.tar.gz
-	mv nvim-linux64 "$HOME/nvim-local"
+	tar -zxvf nvim-linux-x86_64.tar.gz
+	mv nvim-linux-x86_64 "$HOME/nvim-local"
 	
 	# Add to PATH
 	echo 'export PATH=${HOME}/nvim-local/bin:${PATH}' >> "$HOME/.zshrc"
