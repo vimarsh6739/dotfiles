@@ -64,7 +64,6 @@ mkdir -p "${HOME}/.config"
 ln -s "${REPO_ROOT}/nvim.conf" "${HOME}/.config/nvim"
 # set the git editor to nvim
 git config --global core.editor "nvim"
-
 # # Install miniconda
 # install_conda 
 # CHANGE THE CONDA SOLVER TO LIBMAMBA once it's installed. 

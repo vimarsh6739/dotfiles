@@ -314,8 +314,19 @@ vim.o.mouse = 'a'
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+-- vim.o.clipboard = 'unnamedplus'
 
+-- vim.g.clipboard = {
+--   name = 'OSC 52',
+--   copy = {
+--     ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+--     ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+--   },
+--   paste = {
+--     ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+--     ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+--   },
+-- }
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -629,10 +640,16 @@ local servers = {
 local manual_servers = {
   mlir_lsp_server = {
     filetypes = { "mlir" },
-    cmd = { "/home/vimarsh6739/tools/bin/mlir-lsp-server" },
+    cmd = { "/home/vimarsh6739/llvm-project/build/bin/mlir-lsp-server" },
     root_dir = require("lspconfig.util").find_git_ancestor,
     single_file_support = true,
   },
+  stablehlo_lsp_server = {
+    filetypes = { "mlir" },
+    cmd = { "/home/vimarsh6739/higher-order/stablehlo/build/bin/stablehlo-lsp-server" },
+    root_dir = require("lspconfig.util").find_git_ancestor,
+    single_file_support = true,
+  }
 }
 
 
@@ -660,6 +677,27 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
+-- Add this before your manual_servers setup
+local lspconfig = require('lspconfig')
+local configs = require('lspconfig.configs')
+
+-- Register the custom server configuration
+if not configs.stablehlo_lsp_server then
+  configs.stablehlo_lsp_server = {
+    default_config = {
+      cmd = { "/home/vimarsh6739/higher-order/stablehlo/build/bin/stablehlo-lsp-server" },
+      filetypes = { "mlir" },
+      root_dir = lspconfig.util.find_git_ancestor,
+      single_file_support = true,
+    },
+    docs = {
+      description = "StableHLO LSP server",
+      default_config = {
+        root_dir = [[root_pattern(".git")]],
+      },
+    },
+  }
+end
 
 -- Setup the manual servers
 for server_name, server_settings in pairs(manual_servers) do
@@ -680,21 +718,22 @@ vim.filetype.add({
     td = "tablegen"
   },
   pattern = {
-    [".*%.ll"] = "llvm"
-  }
+    [".*%.ll"] = "llvm",
+    [".*%.mlir"] = "mlir",
+  },
 })
 
--- enable mlir highlighting
-vim.g.markdown_fenced_languages = { 'mlir', 'tablegen' }
-
--- source MLIR vim files
-vim.cmd.runtime("syntax/mlir.vim")
-vim.cmd.runtime("ftplugin/mlir.vim")
-vim.cmd.runtime("indent/mlir.vim")
-
--- source tablegen vim files
-vim.cmd.runtime("syntax/tablegen.vim")
-vim.cmd.runtime("ftplugin/tablegen.vim")
+-- -- enable mlir highlighting
+-- vim.g.markdown_fenced_languages = { 'mlir', 'tablegen' }
+--
+-- -- source MLIR vim files
+-- vim.cmd.runtime("syntax/mlir.vim")
+-- vim.cmd.runtime("ftplugin/mlir.vim")
+-- vim.cmd.runtime("indent/mlir.vim")
+--
+-- -- source tablegen vim files
+-- vim.cmd.runtime("syntax/tablegen.vim")
+-- vim.cmd.runtime("ftplugin/tablegen.vim")
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
@@ -750,10 +789,9 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
+-- vim.opt.tabstop = 2
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 
---recommended session options 
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+--recommended session options
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
