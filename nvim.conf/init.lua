@@ -93,6 +93,19 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
+-- Force nvim to use the OSC52 provider for the clipboard
+vim.g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy '+',
+    ['*'] = require('vim.ui.clipboard.osc52').copy '*',
+  },
+  paste = {
+    ['+'] = function() end,
+    ['*'] = function() end,
+  },
+}
+
 -- [[ Setting options ]]
 require 'options'
 
@@ -107,98 +120,3 @@ require 'lazy-plugins'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-
--- -- Git related plugins
--- 'tpope/vim-fugitive',
--- 'tpope/vim-rhubarb',
---
--- -- Detect tabstop and shiftwidth automatically
--- 'tpope/vim-sleuth',
-
--- -- "gc" to comment visual regions/lines
--- { 'numToStr/Comment.nvim', opts = {} },
-
--- {
---   -- Highlight, edit, and navigate code
---   'nvim-treesitter/nvim-treesitter',
---   dependencies = {
---     'nvim-treesitter/nvim-treesitter-textobjects',
---   },
---   build = ':TSUpdate',
--- },
-
--- local manual_servers = {
---   mlir_lsp_server = {
---     filetypes = { 'mlir' },
---     cmd = { '/home/vimarsh6739/llvm-project/build/bin/mlir-lsp-server' },
---     root_dir = require('lspconfig.util').find_git_ancestor,
---     single_file_support = true,
---   },
---   stablehlo_lsp_server = {
---     filetypes = { 'mlir' },
---     cmd = { '/home/vimarsh6739/higher-order/stablehlo/build/bin/stablehlo-lsp-server' },
---     root_dir = require('lspconfig.util').find_git_ancestor,
---     single_file_support = true,
---   },
--- }
---
--- -- Setup neovim lua configuration
--- require('neodev').setup()
---
--- -- Add this before your manual_servers setup
--- local lspconfig = require 'lspconfig'
--- local configs = require 'lspconfig.configs'
---
--- -- Register the custom server configuration
--- if not configs.stablehlo_lsp_server then
---   configs.stablehlo_lsp_server = {
---     default_config = {
---       cmd = { '/home/vimarsh6739/higher-order/stablehlo/build/bin/stablehlo-lsp-server' },
---       filetypes = { 'mlir' },
---       root_dir = lspconfig.util.find_git_ancestor,
---       single_file_support = true,
---     },
---     docs = {
---       description = 'StableHLO LSP server',
---       default_config = {
---         root_dir = [[root_pattern(".git")]],
---       },
---     },
---   }
--- end
---
--- -- Setup the manual servers
--- for server_name, server_settings in pairs(manual_servers) do
---   require('lspconfig')[server_name].setup {
---     capabilities = capabilities,
---     on_attach = on_attach,
---     filetypes = server_settings.filetypes,
---     cmd = server_settings.cmd,
---     root_dir = server_settings.root_dir,
---     single_file_support = server_settings.single_file_support,
---   }
--- end
---
--- -- add mlir filetype
--- vim.filetype.add {
---   extension = {
---     mlir = 'mlir',
---     td = 'tablegen',
---   },
---   pattern = {
---     ['.*%.ll'] = 'llvm',
---     ['.*%.mlir'] = 'mlir',
---   },
--- }
---
--- -- enable mlir highlighting
--- vim.g.markdown_fenced_languages = { 'mlir', 'tablegen' }
---
--- -- source MLIR vim files
--- vim.cmd.runtime("syntax/mlir.vim")
--- vim.cmd.runtime("ftplugin/mlir.vim")
--- vim.cmd.runtime("indent/mlir.vim")
---
--- -- source tablegen vim files
--- vim.cmd.runtime("syntax/tablegen.vim")
--- vim.cmd.runtime("ftplugin/tablegen.vim")
