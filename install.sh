@@ -59,9 +59,11 @@ sed -i "s/plugins=.*/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/"
 install_nvim
 # alias vim to nvim
 echo "alias vim='nvim'" >> "$HOME/.zshrc"
+
 # set neovim config
 mkdir -p "${HOME}/.config"
 ln -s "${REPO_ROOT}/nvim.conf" "${HOME}/.config/nvim"
+
 # set the git editor to nvim
 git config --global core.editor "nvim"
 # # Install miniconda
