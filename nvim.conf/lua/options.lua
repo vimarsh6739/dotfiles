@@ -71,6 +71,12 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+--set defaults for ts, sts, sw, et
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.sw = 4
+vim.o.expandtab = true
+
 --recommended session options
 vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
 -- vim: ts=2 sts=2 sw=2 et
