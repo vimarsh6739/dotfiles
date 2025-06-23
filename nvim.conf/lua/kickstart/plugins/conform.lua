@@ -31,11 +31,23 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        racket = { 'raco_fmt' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+      formatters = {
+        raco_fmt = {
+          command = 'raco',
+          args = { 'fmt' },
+          stdin = true,
+          exit_codes = { 0 },
+          condition = function(self, ctx)
+            return vim.fn.executable 'raco' == 1
+          end,
+        },
       },
     },
   },
