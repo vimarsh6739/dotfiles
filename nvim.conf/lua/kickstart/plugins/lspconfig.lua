@@ -273,6 +273,11 @@ return {
       }
 
       vim.lsp.enable 'racket_langserver'
+      vim.lsp.config('racket_langserver', {
+        cmd = { 'xvfb-run', 'racket', '--lib', 'racket-langserver' },
+        filetypes = { 'racket', 'scheme' },
+        root_markers = { '.git' },
+      })
     end,
   },
 }
