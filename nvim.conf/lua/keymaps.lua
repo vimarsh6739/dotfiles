@@ -52,6 +52,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Doxygen keymap
-vim.keymap.set('n', '<leader>nf', ":lua require('neogen').generate()<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>dg', ":lua require('neogen').generate()<CR>", { noremap = true, silent = true })
 
 -- vim: ts=2 sts=2 sw=2 et
