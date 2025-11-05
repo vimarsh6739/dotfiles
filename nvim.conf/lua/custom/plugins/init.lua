@@ -42,6 +42,14 @@ return {
       -- vim.g["conjure#debug"] = true
     end,
   },
+  {
+    'navarasu/onedark.nvim',
+    priority = 1000,
+    config = function()
+      require('onedark').setup { style = 'warm' }
+      require('onedark').load()
+    end,
+  },
 }
 
 -- LSP setup for MLIR
