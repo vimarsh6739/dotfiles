@@ -59,8 +59,15 @@ syn match mlirOps /\<scf\.execute_region\>/
 syn match mlirOps /\<scf\.for\>/
 syn match mlirOps /\<scf\.if\>/
 syn match mlirOps /\<scf\.yield\>/
+syn match mlirOps /\<scf\.reduce\>/
+syn match mlirOps /\<scf\.parallel\>/
 
 " TODO: dialect name prefixed ops (llvm or std).
+
+" LLVM ops.
+syn match mlirOps /\<enzyme\.autodiff_region\>/
+syn match mlirOps /\<enzyme\.autodiff\>/
+syn match mlirOps /\<enzyme\.fwddiff\>/
 
 " Keywords.
 syn keyword mlirKeyword

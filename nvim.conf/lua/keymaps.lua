@@ -11,7 +11,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
---
+
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
@@ -53,5 +53,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Doxygen keymap
 vim.keymap.set('n', '<leader>dg', ":lua require('neogen').generate()<CR>", { noremap = true, silent = true })
+
+-- Keymap so that we can simply :e in the current buffer dir
+local function get_bufdir()
+  local dir = vim.fn.expand '%:p:h'
+  if dir == '' then
+    dir = vim.fn.getcwd()
+  end
+  return dir
+end
+
+vim.keymap.set('n', '<leader>e', function()
+  vim.fn.feedkeys(':e ' .. get_bufdir() .. '/', 'n')
+end, { noremap = true, silent = true })
 
 -- vim: ts=2 sts=2 sw=2 et
