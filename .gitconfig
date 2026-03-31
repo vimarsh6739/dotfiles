@@ -1,0 +1,13 @@
+[core]
+	editor = nvim
+[init]
+	defaultBranch = main
+[format]
+    signoff = true
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	last = log -1 HEAD
+    syncref = "!f() { git fetch origin || exit $?; git rebase origin/main || { s=$?; git rebase --abort >/dev/null 2>&1; exit $s; }; git push --force-with-lease origin HEAD; }; f"
