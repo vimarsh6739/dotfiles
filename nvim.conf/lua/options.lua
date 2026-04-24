@@ -78,4 +78,11 @@ vim.o.expandtab = true
 
 --recommended session options
 vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+
+-- Use Tree-sitter to compute folds.
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- Start with folds open; close them manually when desired.
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
 -- vim: ts=2 sts=2 sw=2 et
