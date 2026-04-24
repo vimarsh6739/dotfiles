@@ -3,3 +3,6 @@ test.sh
 .luarc.json
 nvim
 lazy-lock.json
+nvim.conf/parsers/parser/*.so
+nvim.conf/parsers/parser/*.dylib
+nvim.conf/parsers/parser/*.dll
