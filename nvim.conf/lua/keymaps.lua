@@ -67,4 +67,7 @@ vim.keymap.set('n', '<leader>e', function()
   vim.fn.feedkeys(':e ' .. get_bufdir() .. '/', 'n')
 end, { noremap = true, silent = true })
 
+-- copy current filepath into clipboard(through + register)
+vim.keymap.set('n', '<leader>py', ':let @+ = @%<CR>', { silent = true })
+
 -- vim: ts=2 sts=2 sw=2 et
