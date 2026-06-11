@@ -22,7 +22,7 @@ let maplocalleader = ' '
 
 set timeout timeoutlen=500
 set clipboard=unnamedplus,unnamed
-colorscheme elflord
+colorscheme wildcharm
 
 " Pending-key help, similar to which-key.nvim in Neovim.
 let g:which_key_map = {}
