@@ -65,7 +65,7 @@ mkdir -p "${HOME}/.config"
 ln -s "${REPO_ROOT}/nvim.conf" "${HOME}/.config/nvim"
 
 # set vim config
-ln -s "${REPO_ROOT}/vim.conf" "${HOME}/.vimrc"
+ln -s "${REPO_ROOT}/.vimrc" "${HOME}/.vimrc"
 
 # set the git editor to nvim
 git config --global core.editor "nvim"
