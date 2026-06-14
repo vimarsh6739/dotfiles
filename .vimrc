@@ -267,6 +267,12 @@ let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_virtual_text_enabled = 1
 let g:lsp_document_highlight_enabled = 1
 
+" C/C++ folding. Vim's C syntax marks brace blocks as foldable.
+augroup vim_cpp_folding
+  autocmd!
+  autocmd FileType c,cpp,objc,objcpp,cuda setlocal foldmethod=syntax foldlevel=99 foldenable
+augroup END
+
 function! s:clangd_root_uri() abort
   let l:root = lsp#utils#find_nearest_parent_file_directory(
         \ lsp#utils#get_buffer_path(),
