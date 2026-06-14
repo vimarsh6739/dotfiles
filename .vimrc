@@ -6,6 +6,7 @@ endif
 
 call plug#begin(data_dir . '/plugged')
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
