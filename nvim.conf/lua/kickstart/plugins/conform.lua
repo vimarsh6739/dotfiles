@@ -32,6 +32,7 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         racket = { 'raco_fmt' },
+        python = { 'black' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
