@@ -34,7 +34,6 @@ return {
     lazy = false,
     build = 'test -x "$HOME/.local/bin/mlir-lsp-server" || ./install.sh',
     dependencies = {
-      'nvim-treesitter/nvim-treesitter',
       'saghen/blink.cmp',
     },
     config = function()
