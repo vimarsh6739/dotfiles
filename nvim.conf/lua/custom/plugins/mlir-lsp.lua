@@ -2,7 +2,7 @@ return {
   {
     'vimarsh6739/mlir-lsp',
     lazy = false,
-    build = './install.sh',
+    build = 'test -x "$HOME/.local/bin/mlir-lsp-server" || ./install.sh',
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
       'saghen/blink.cmp',
