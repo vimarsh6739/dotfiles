@@ -19,34 +19,44 @@ local function find_checkout()
       return path
     end
   end
-
-  error 'mlir-lsp development checkout not found; set MLIR_LSP_DEV_PATH'
 end
 
 local checkout = find_checkout()
-local development_server = checkout .. '/bazel-bin/mlir-lsp-server'
 local installed_server = vim.fn.expand '~/.local/bin/mlir-lsp-server'
+local server = installed_server
+
+if checkout then
+  local development_server = checkout .. '/bazel-bin/mlir-lsp-server'
+  if vim.fn.executable(development_server) == 1 then
+    server = development_server
+  end
+end
+
+local plugin = {
+  lazy = false,
+  build = 'test -x "$HOME/.local/bin/mlir-lsp-server" || ./install.sh',
+  dependencies = {
+    'saghen/blink.cmp',
+  },
+  config = function()
+    require('mlir_lsp').setup {
+      lsp = {
+        cmd = { server },
+        capabilities = require('blink.cmp').get_lsp_capabilities(),
+      },
+    }
+  end,
+}
+
+if checkout then
+  plugin.name = 'mlir-lsp'
+  plugin.dir = checkout
+else
+  plugin[1] = 'vimarsh6739/mlir-lsp'
+end
 
 return {
-  {
-    name = 'mlir-lsp',
-    dir = checkout,
-    lazy = false,
-    build = 'test -x "$HOME/.local/bin/mlir-lsp-server" || ./install.sh',
-    dependencies = {
-      'saghen/blink.cmp',
-    },
-    config = function()
-      require('mlir_lsp').setup {
-        lsp = {
-          cmd = {
-            vim.fn.executable(development_server) == 1 and development_server or installed_server,
-          },
-          capabilities = require('blink.cmp').get_lsp_capabilities(),
-        },
-      }
-    end,
-  },
+  plugin,
 }
 
 -- vim: ts=2 sts=2 sw=2 et
