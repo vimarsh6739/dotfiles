@@ -34,7 +34,7 @@ end
 
 local plugin = {
   lazy = false,
-  build = './install.sh',
+  build = vim.fn.executable(server) ~= 1 and './install.sh' or false,
   dependencies = {
     'saghen/blink.cmp',
   },
