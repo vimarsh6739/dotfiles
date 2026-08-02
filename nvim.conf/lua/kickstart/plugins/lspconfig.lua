@@ -283,7 +283,7 @@ return {
       end
 
       vim.lsp.config('mlir_lsp_server', {
-        cmd = { vim.fn.expand '~/.local/bin/enzymexla-lsp-server' },
+        cmd = { vim.fn.expand '~/.local/bin/mlir-lsp-server' },
         filetypes = { 'mlir' },
         root_markers = { '.git' },
         capabilities = capabilities,
