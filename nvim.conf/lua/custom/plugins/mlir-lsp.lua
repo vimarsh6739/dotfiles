@@ -34,7 +34,7 @@ end
 
 local plugin = {
   lazy = false,
-  build = 'test -x "$HOME/.local/bin/mlir-lsp-server" || ./install.sh',
+  build = './install.sh',
   dependencies = {
     'saghen/blink.cmp',
   },
