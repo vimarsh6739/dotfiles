@@ -282,6 +282,14 @@ return {
         vim.lsp.enable(server_name)
       end
 
+      vim.lsp.config('mlir_lsp_server', {
+        cmd = { vim.fn.expand '~/.local/bin/enzymexla-lsp-server' },
+        filetypes = { 'mlir' },
+        root_markers = { '.git' },
+        capabilities = capabilities,
+      })
+      vim.lsp.enable 'mlir_lsp_server'
+
       vim.lsp.enable 'racket_langserver'
       vim.lsp.config('racket_langserver', {
         cmd = { 'xvfb-run', 'racket', '--lib', 'racket-langserver' },
