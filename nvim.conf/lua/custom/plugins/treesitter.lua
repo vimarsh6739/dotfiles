@@ -6,7 +6,6 @@ local parsers = {
   'rust',
   'cuda',
   'llvm',
-  'mlir',
   'haskell',
   'tablegen',
   'starlark',
@@ -35,20 +34,6 @@ return {
     lazy = false,
     build = ':TSUpdate',
     config = function()
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'TSUpdate',
-        callback = function()
-          require('nvim-treesitter.parsers').mlir = {
-            install_info = {
-              url = 'https://github.com/felixtensor/tree-sitter-mlir',
-              -- Periodically update this pin to upstream HEAD, then run :TSUpdate mlir.
-              revision = '258c6cdbd7ddcfa20e7c2a2ac9e8f6e3beebf457',
-              queries = 'queries',
-            },
-          }
-        end,
-      })
-
       require('nvim-treesitter').install(parsers)
 
       vim.api.nvim_create_autocmd('FileType', {
