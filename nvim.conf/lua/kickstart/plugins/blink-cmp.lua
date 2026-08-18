@@ -73,6 +73,20 @@ return {
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
         documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        menu = {
+          draw = {
+            components = {
+              label_description = {
+                text = function(ctx)
+                  if ctx.item.client_name == 'julials' and ctx.item.label:sub(1, 1) == '\\' then
+                    return ctx.item.detail or ctx.label_description
+                  end
+                  return ctx.label_description
+                end,
+              },
+            },
+          },
+        },
       },
 
       sources = {

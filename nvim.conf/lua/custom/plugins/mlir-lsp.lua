@@ -22,15 +22,7 @@ local function find_checkout()
 end
 
 local checkout = find_checkout()
-local installed_server = vim.fn.expand '~/.local/bin/mlir-lsp-server'
-local server = installed_server
-
-if checkout then
-  local development_server = checkout .. '/bazel-bin/mlir-lsp-server'
-  if vim.fn.executable(development_server) == 1 then
-    server = development_server
-  end
-end
+local server = vim.fn.expand '~/.local/bin/mlir-lsp'
 
 local plugin = {
   lazy = false,
@@ -40,10 +32,8 @@ local plugin = {
   },
   config = function()
     require('mlir_lsp').setup {
-      lsp = {
-        cmd = { server },
-        capabilities = require('blink.cmp').get_lsp_capabilities(),
-      },
+      cmd = { server },
+      capabilities = require('blink.cmp').get_lsp_capabilities(),
     }
   end,
 }

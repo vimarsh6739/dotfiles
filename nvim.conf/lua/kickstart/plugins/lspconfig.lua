@@ -237,11 +237,39 @@ return {
           },
         },
         julials = {
+          -- JuliaLS only adds the package itself and `[extras]` to its lint
+          -- environment for files below `test/`; it does not do the analogous
+          -- thing for package extensions and `[weakdeps]`. Give `ext/` its own
+          -- workspace and use the package's test environment, where extension
+          -- triggers are available, so imports and go-to-definition resolve.
+          root_dir = function(bufnr, on_dir)
+            local filename = vim.api.nvim_buf_get_name(bufnr)
+            local package_root = vim.fs.root(filename, { 'JuliaProject.toml', 'Project.toml', '.git' })
+            if not package_root then
+              return
+            end
+
+            local ext_root = vim.fs.joinpath(package_root, 'ext')
+            if vim.startswith(filename, ext_root .. '/') then
+              on_dir(ext_root)
+            else
+              on_dir(package_root)
+            end
+          end,
           -- mason-lspconfig's Julia adapter currently adds the required
           -- environment argument in before_init, after Neovim has already
           -- spawned the process. Start it with the project root instead.
           cmd = function(dispatchers, config)
-            local cmd = { 'julia-lsp', config.root_dir or vim.fn.getcwd() }
+            local workspace_root = config.root_dir or vim.fn.getcwd()
+            local environment_root = workspace_root
+            if vim.fs.basename(workspace_root) == 'ext' then
+              local test_root = vim.fs.joinpath(vim.fs.dirname(workspace_root), 'test')
+              if vim.uv.fs_stat(vim.fs.joinpath(test_root, 'Project.toml')) then
+                environment_root = test_root
+              end
+            end
+
+            local cmd = { 'julia-lsp', environment_root }
             return vim.lsp.rpc.start(cmd, dispatchers, {
               cwd = config.cmd_cwd,
               env = config.cmd_env,
