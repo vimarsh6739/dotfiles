@@ -28,7 +28,16 @@ return {
           --   end,
           -- },
         },
-        opts = {},
+        opts = {
+          -- No automatic expansions until we add autosnippets to our files.
+          enable_autosnippets = true,
+        },
+        config = function(_, opts)
+          require('luasnip').setup(opts)
+          require('luasnip.loaders.from_lua').lazy_load {
+            paths = { vim.fn.stdpath 'config' .. '/LuaSnip' },
+          }
+        end,
       },
       'folke/lazydev.nvim',
     },
@@ -91,6 +100,10 @@ return {
 
       sources = {
         default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        -- VimTeX supplies commands, citation keys, and labels via omnifunc.
+        per_filetype = {
+          tex = { 'omni', 'path', 'snippets' },
+        },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         },

@@ -55,6 +55,10 @@ return {
         pattern = filetypes,
         callback = function(event)
           local parser = parser_aliases[event.match] or event.match
+          -- VimTeX's syntax parser also powers math context detection.
+          if parser == 'latex' then
+            return
+          end
           pcall(vim.treesitter.start, event.buf, parser)
         end,
       })
