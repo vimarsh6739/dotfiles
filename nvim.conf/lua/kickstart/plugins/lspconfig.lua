@@ -213,7 +213,30 @@ return {
           filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto', 'inc' },
         },
         -- gopls = {},
-        pyright = {},
+        pyright = {
+          before_init = function(_, config)
+            local root = config.root_dir
+            if not root or not vim.uv.fs_readlink(root .. '/bazel-out') then
+              return
+            end
+
+            -- Pyright enumerates the workspace even in openFilesOnly mode.
+            -- Bazel's output symlinks lead into huge build and dependency trees.
+            local analysis = config.settings.python.analysis
+            analysis.exclude = vim.list_extend(analysis.exclude or {
+              '**/node_modules',
+              '**/__pycache__',
+              '**/.*',
+              '**/venv',
+              '**/env',
+            }, { '**/bazel-*' })
+
+            local external = vim.uv.fs_readlink(root .. '/external')
+            if external and external:match '^bazel%-out/' then
+              table.insert(analysis.exclude, 'external')
+            end
+          end,
+        },
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --

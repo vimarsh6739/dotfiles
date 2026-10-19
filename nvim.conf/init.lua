@@ -94,6 +94,10 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
+-- Reuse this Neovim instance for external editor requests, such as Codex Ctrl-G.
+vim.env.VISUAL = "nvr -cc split --remote-wait +'setlocal bufhidden=delete'"
+vim.env.EDITOR = vim.env.VISUAL
+
 -- Force nvim to use the OSC52 provider for the clipboard
 vim.g.clipboard = {
   name = 'OSC 52',

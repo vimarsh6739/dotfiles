@@ -39,6 +39,25 @@ vim.o.signcolumn = 'yes'
 -- Decrease update time
 vim.o.updatetime = 250
 
+-- Reload unmodified buffers after external tools change their files on disk.
+vim.o.autoread = true
+local external_file_reload_pending = false
+local external_file_reload_group = vim.api.nvim_create_augroup('external-file-reload', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'TermLeave', 'CursorHold' }, {
+  group = external_file_reload_group,
+  desc = 'Reload buffers changed outside Neovim',
+  callback = function()
+    if external_file_reload_pending then
+      return
+    end
+    external_file_reload_pending = true
+    vim.schedule(function()
+      external_file_reload_pending = false
+      vim.cmd.checktime()
+    end)
+  end,
+})
+
 -- Decrease mapped sequence wait time
 vim.o.timeoutlen = 300
 
