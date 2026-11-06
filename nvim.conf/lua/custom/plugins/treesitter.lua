@@ -15,6 +15,8 @@ local parsers = {
   'gitignore',
   'latex',
   'make',
+  'markdown',
+  'markdown_inline',
   'vim',
   'vimdoc',
 }
